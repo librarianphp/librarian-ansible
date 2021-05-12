@@ -1,0 +1,41 @@
+---
+- hosts: all
+  become: true
+  vars_files:
+    - ansible/group_vars/all.yml
+  tasks:
+    - name: Make sure the remote app root exists and has the right permissions
+      file:
+        path: "{{ remote_www_root }}/{{ app_root_dir }}"
+        state: directory
+        mode: '0755'
+        owner: "{{ remote_system_user }}"
+        group: "{{ remote_system_user }}"
+
+    - name: Rsync application files to the remote server
+      synchronize:
+        src: "."
+        dest: "{{ remote_www_root }}"
+        rsync_opts:
+          - "--no-motd"
+          - "--exclude=.git"
+          - "--exclude=.github"
+          - "--exclude=ansible"
+          - "--exclude=docker-compose*"
+          - "--exclude=Dockerfile"
+          - "--exclude=vendor"
+      tags: [ 'sync' ]
+
+    - name: Set up additional directory permissions for www-data user on storage folder
+      acl:
+        path: "{{ remote_www_root }}/{{ app_root_dir }}/var/"
+        entry: group:www-data:rwX
+        recursive: yes
+        state: present
+
+    - name: Install Dependencies with Composer
+      become: false
+      composer:
+        command: install
+        working_dir: "{{ remote_www_root }}/{{ app_root_dir }}"
+      tags: [ 'composer' ]

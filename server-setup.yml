@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - { role: setup, tags: ['setup'] }
+
+    - { role: php, tags: ['php', 'web', 'php-fpm'] }
+
+    - { role: nginx, tags: ['nginx', 'web', 'http'] }
+
+    - { role: composer, tags: ['composer'] }

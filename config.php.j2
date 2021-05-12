@@ -1,0 +1,26 @@
+<?php
+
+return [
+    // General App Settings
+    'app_path' => __DIR__ . '/app/Command',
+    'data_dir' => __DIR__ . '/var/data',
+    'cache_minutes' => 5, //followers and subs info cache expires in X minutes (reduces api reqs)
+    'notifications_file' => __DIR__ . '/var/logs/notifications.txt',
+
+    // Twig Settings for Browser Widgets
+    'twig_templates_path' => __DIR__ . '/app/views',
+
+    // Twitch API Credentials for Widgets
+    // Register app at: https://dev.twitch.tv/console/apps and use http://localhost:8000/twitch as callback
+    // Then, run the local server and access the /twitch endpoint to authorize your app and obtain your access token
+    'twitch_user_login' => '{{ twitch_user_login }}',
+    'twitch_client_id' => '{{ twitch_client_id }}',
+    'twitch_access_token' => '{{ twitch_access_token }}',
+    'twitch_redirect_url' => '{{ twitch_redirect_url }}',
+
+    //Twitch Chatbot Credentials.
+    'twitch_user' => '{{ twitch_user }}',
+    'twitch_oauth' => '{{ twitch_chat_oauth }}',
+    'chatbot_autoload' => __DIR__ . '/chatbot',
+    'chatbot_channels' => {{ chatbot_channels }}
+];

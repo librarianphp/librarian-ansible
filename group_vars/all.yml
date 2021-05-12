@@ -1,0 +1,13 @@
+---
+# Initial Server Setup
+remote_system_user: erika
+sys_packages: [ 'curl', 'vim', 'git', 'ufw', 'acl', 'imagemagick', 'curl']
+
+# PHP
+php_packages: [ "php-imagick", "php-curl", "php-json", "php-mbstring", "php-bcmath", "php-xml" ]
+
+# Web Server Setup
+http_host: librarianphp.dev
+remote_www_root: /var/www
+app_root_dir: librarian-docs
+document_root: "{{ remote_www_root }}/{{ app_root_dir }}/web"

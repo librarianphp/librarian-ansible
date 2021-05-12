@@ -1,0 +1,5 @@
+[dev]
+librarian ansible_host=192.168.10.10
+
+[all:vars]
+ansible_python_interpreter=/usr/bin/python3
